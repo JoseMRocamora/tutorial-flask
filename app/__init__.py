@@ -6,12 +6,16 @@ from flask_sqlalchemy import SQLAlchemy
 login_manager = LoginManager()
 db = SQLAlchemy()
 
-def create_app():
-    app = Flask(__name__)
+def create_app(settings_module):
+    app = Flask(__name__, instance_relative_config=True)
 
-    app.config['SECRET_KEY'] = '5eb861997206962e77f24379ea1b2552fc85769bf72843bf813a6578ee6a01c4'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:masterkey@localhost:5432/miniblog'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    # Load the config file specified by the APP environment variable
+    app.config.from_object(settings_module)
+    # Load the configuration from the instance folder
+    if app.config.get('TESTING', False):
+        app.config.from_pyfile('config-testing.py', silent=True)
+    else:
+        app.config.from_pyfile('config.py', silent=True)
 
     login_manager.init_app(app)
     login_manager.login_view = "login"
