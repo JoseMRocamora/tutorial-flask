@@ -31,6 +31,10 @@ class User(db.Model, UserMixin):
             db.session.add(self)
         db.session.commit()
 
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
     @staticmethod
     def get_by_id(id):
         return User.query.get(id)
@@ -38,3 +42,7 @@ class User(db.Model, UserMixin):
     @staticmethod
     def get_by_email(email):
         return User.query.filter_by(email=email).first()
+
+    @staticmethod
+    def get_all():
+        return User.query.all()
