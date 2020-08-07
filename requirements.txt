@@ -5,3 +5,4 @@ flask-login
 flask-sqlalchemy
 psycopg2
 python-slugify
+flask-migrate
