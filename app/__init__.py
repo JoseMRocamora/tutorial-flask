@@ -3,11 +3,14 @@ import logging
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_mail import Mail
 
 
 login_manager = LoginManager()
 db = SQLAlchemy()
-migrate = Migrate()  # Se crea un objeto de tipo Migrate
+migrate = Migrate()  # Se crea un objeto de tipo Migrate, para la migracion/actualizacion de la BBDD 
+mail = Mail()  # Instanciamos un objeto de tipo Mail, para el envio de correos desde la app
+
 
 def create_app(settings_module):
     app = Flask(__name__, instance_relative_config=True)
@@ -28,6 +31,7 @@ def create_app(settings_module):
 
     db.init_app(app)
     migrate.init_app(app, db)  # Se inicializa el objeto migrate
+    mail.init_app(app)  # Se inicializa el objeto mail
 
     # Registro de los Blueprints
     from .auth import auth_bp
