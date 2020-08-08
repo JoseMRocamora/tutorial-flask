@@ -30,8 +30,10 @@ class Post(db.Model):
                 db.session.commit()
                 saved = True
             except IntegrityError:
+                db.session.rollback()
+                db.session.add(self)
                 count += 1
-                self.title_slug = f'{self.title_slug}-{count}'
+                self.title_slug = f'{slugify(self.title)}-{count}'
 
     def delete(self):
         db.session.delete(self)
