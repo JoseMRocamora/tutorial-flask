@@ -51,6 +51,11 @@ class Post(db.Model):
     def get_by_id(id):
         return Post.query.get(id)
 
+    @staticmethod
+    def all_paginated(page=1, per_page=20):
+        return Post.query.order_by(Post.created.asc()).\
+            paginate(page=page, per_page=per_page, error_out=False)
+
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)

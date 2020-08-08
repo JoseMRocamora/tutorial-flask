@@ -63,7 +63,8 @@ def configure_logging(app):
     # Elimina los manejadores por defecto de la app
     del app.logger.handlers[:]
 
-    loggers = [app.logger, ]  # logging.getLogger('sqlalchemy')]  logger de la libreria SQLAlchemy
+    loggers = [app.logger, ]  
+    #loggers = [app.logger, logging.getLogger('sqlalchemy')]  # logger de la libreria SQLAlchemy
     handlers = []
 
     console_handler = logging.StreamHandler()
