@@ -7,3 +7,4 @@ psycopg2
 python-slugify
 flask-migrate
 flask-mail
+gunicorn
